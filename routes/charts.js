@@ -10,11 +10,10 @@ var    express = require('express'),
  xmlserializer = require('xmlserializer'),
             im = require('imagemagick'),
      svgexport = require('svgexport'),
-    //svgpng = require('svgpng'),
     Canvas = require('canvas'),
          jsdom = require('jsdom');
 
-var gulp = require('gulp');
+
 var svg2png = require('svg2png');
 
 var router = express.Router();
@@ -65,30 +64,106 @@ function drawSVG(res){
     var svg = document.querySelector( "svg" );
     var svgData = xmlserializer.serializeToString(svg);
 
-    //if we have canvas
-    var img = Canvas.Image;
-    var canvas = new Canvas(500, 500);
-    var ctx = canvas.getContext('2d');
-
     //var canvas = document.createElement( "canvas" );
     //var ctx = canvas.getContext( "2d" );
     //var img = document.getElementById("img");
-    img.setAttribute( "src", "data:image/svg+xml;base64," + btoa(svgData) );
-    console.log("data:image/svg+xml;base64," + btoa(svgData));
+    //img.setAttribute( "src", "data:image/svg+xml;base64," + btoa(svgData) );
 
-    img.onload = function() {
-        ctx.drawImage( img, 0, 0 );
-        var canvasURL = canvas.toDataURL("image/png");
-        console.log("canvasURL:" + canvasURL); // <---final data
-    };
+    //console.log("data:image/svg+xml;base64," + btoa(svgData));
+
+    //img.onload = function() {
+    //    ctx.drawImage( img, 0, 0 );
+    //    var canvasURL = canvas.toDataURL("image/png");
+    //    console.log("canvasURL:" + canvasURL); // <---final data
+    //
+    //    var image = document.querySelector("image");
+    //    image.src = canvasURL;
+    //    // PRINT OUT:
+    //    res.send(document.body);
+    //};
+    //---------------------------------------------------------------
+    ////if we have canvas
+    var canvas = new Canvas(500, 500, 'svg');
+
+    //save canvas to svg
+    //fs.writeFile('out.svg', canvas.toBuffer());
+
+    var img = Canvas.Image;
+    var ctx = canvas.getContext('2d');
+
+    //this is image data "data:image/svg+xml;base64," + btoa(svgData)
+    img.src = "data:image/svg+xml;base64," + btoa(svgData);
+
+
+
+    ////Err: Image or Canvas expected
+    //ctx.drawImage(img, 0, 0);
+    //console.log('<img src="' + canvas.toDataURL() + '" />');
+    //var out = fs.createWriteStream('text.png');
+    //var stream = canvas.pngStream();
+    //stream.on('data', function(chunk){
+    //    out.write(chunk);
+    //});
+    //
+    //stream.on('end', function(){
+    //    console.log('saved png');
+    //});
+
+
+
+
+
+
+
     //---------------------------------------------------------------------------
-
-    // PRINT OUT:
-    res.send(canvasURL);
-
     //Save SVG
     //fs.writeFileSync('out.svg', window.d3.select("body").html()); // or this
 
+    res.send('<img src="' + img.src + '" />');
+    //drawAwesome(res);
+
+
+}
+
+function decodeBase64Image(dataString) {
+    var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+        response = {};
+
+    if (matches.length !== 3) {
+        return new Error('Invalid input string');
+    }
+
+    response.type = matches[1];
+    response.data = new Buffer(matches[2], 'base64');
+
+    return response;
+}
+
+function decodeBase64Image2(){
+    //var imageBuffer = decodeBase64Image("data:image/svg+xml;base64," + btoa(svgData));
+    //console.log(imageBuffer.data);
+    //
+    //fs.writeFile('test.jpg', imageBuffer, function(err) {
+    //    if(err){
+    //        console.log(err);
+    //    }
+    //});
+
+    //var image = "data:image/svg+xml;base64," + btoa(svgData);
+    //var data = image.replace(/^data:image\/\w+;base64,/, '');
+    //fs.writeFile("image.png", data, {encoding: 'base64'}, function(err){
+    //    if(err){
+    //      console.log(err);
+    //    }
+    //});
+
+    var rawStr = "data:image/svg+xml;base64," + btoa(svgData);
+    var base64Data = rawStr.replace(/^data:image\/png;base64,/, "");
+    fs.writeFile("out.png", base64Data, 'base64', function(err) {
+        if(err){
+            console.log(err);
+        }
+    });
 }
 
 function drawChart(res){
@@ -426,4 +501,49 @@ function drawBarChartWithScale(res) {
                 });
         });
 
+}
+
+//Work with canvas
+function drawAwesome(res){
+    var Canvas = require('canvas')
+        , Image = Canvas.Image
+        , canvas = new Canvas(200, 200)
+        , ctx = canvas.getContext('2d');
+
+    ctx.font = '30px Impact';
+    ctx.rotate(.1);
+    ctx.fillText("Awesome!", 50, 100);
+
+    var te = ctx.measureText('Awesome!');
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+    ctx.beginPath();
+    ctx.lineTo(50, 102);
+    ctx.lineTo(50 + te.width, 102);
+    ctx.stroke();
+
+    //console.log('<img src="' + canvas.toDataURL() + '" />');
+
+    res.send('<img src="' + canvas.toDataURL() + '" />');
+}
+
+function CopyImage(){
+    var canvas = new Canvas(500, 500, 'svg');
+    var img = Canvas.Image;
+    var ctx = canvas.getContext('2d');
+
+    fs.readFile('images/flag.png', function(err, flag){
+        if (err) throw err;
+        img.src = flag;
+        //ctx.drawImage(img, 0, 0, img.width / 4, img.height / 4);
+    });
+
+    var out = fs.createWriteStream('cloneflag.png');
+    var stream = canvas.pngStream();
+    stream.on('data', function(chunk){
+        out.write(chunk);
+    });
+
+    stream.on('end', function(){
+        console.log('saved png');
+    });
 }
