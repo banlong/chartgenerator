@@ -16,8 +16,11 @@ function drawBubbleChart(input) {
     var config = input.config;
     var chartId = input.id;
     var dimension = config.dimension;
-    var selectedOpt = config.selectedOpt;
-    var optList  = config.optList;
+
+    var showLegend = config.showLegend;
+    if (!showLegend){
+        showLegend = false;
+    }
     var h = dimension.h;
     var w = dimension.w;
     var colors = [
@@ -241,7 +244,7 @@ function drawBubbleChart(input) {
 
 
     //If opt is 'Show Legend'
-    if(selectedOpt == optList[0]){
+    if(showLegend){
         // Add legend
         //var legendWidth = width, legendHeight = 100;
         var circleRadius = 10;
@@ -332,10 +335,13 @@ function drawLineChart(input){
     var config = input.config;
     var chartId = input.id;
     var dimension = config.dimension;
-    var selectedOpt = config.selectedOpt;
-    var optList  = config.optList;
     var h = dimension.h;
     var w = dimension.w;
+
+    var showLineLabel = config.showLineLabel;
+    if (!showLineLabel){
+        showLineLabel = false;
+    }
 
     //Chart dimension
     var margin = {top: 40, right: 40, bottom: 40, left: 50};
@@ -462,7 +468,7 @@ function drawLineChart(input){
 
 
         //If select option Add label to the line
-        if(selectedOpt == optList[0]){
+        if(showLineLabel){
             svg.append("text")
                 //.attr("transform", "translate(" + (width - 2*padding) + "," + yScale(d3.max(lineData, function(d) { return d.score; })) + ")")
                 .attr("dy", ".35em")
@@ -533,11 +539,9 @@ function drawLiquidGauge(input){
     var config = input.config;
     var chartId = input.id;
     var dimension = config.dimension;
-    var selectedOpt = config.selectedOpt;
-    var optList  = config.optList;
+
     var h = dimension.h;
     var w = dimension.w;
-
 
     //Prepare data
     var orgData = data.orgData;
@@ -639,6 +643,21 @@ function drawLiquidGauge(input){
                 .attr("y", orgIndex*(2*radius + yInnerPad))
                 .attr("height", height);
             var gaugeConfig = getGaugeConfig(scoreIndex);
+
+            //Reflect user configuration
+            if(config.displayPercent !== null){
+                console.log(config.displayPercent);
+                gaugeConfig.displayPercent = config.displayPercent;
+            }
+            if(config.showGaugeLabel !== null){
+                gaugeConfig.showGaugeLabel = config.showGaugeLabel;
+            }
+            if(config.minValue){
+                gaugeConfig.minValue = config.minValue;
+            }
+            if(config.maxValue){
+                gaugeConfig.maxValue = config.maxValue;
+            }
             loadLiquidFillGauge(window, locale, scoreId, scoreValue, label, gaugeConfig);
         }
     }
