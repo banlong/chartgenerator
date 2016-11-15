@@ -7,7 +7,7 @@ var    express = require('express'),
             d3 = require('d3'),
           btoa = require('btoa'),
  xmlserializer = require('xmlserializer'),
-        Canvas = require('canvas'),
+       // Canvas = require('canvas'),
             gm = require('gm').subClass({ imageMagick: true }),
          jsdom = require('jsdom');
 
@@ -19,8 +19,8 @@ router.post('/:chartId', function(req, res, next) {
     var chartId = req.params.chartId;
 
     //Get input data:
-    console.log('Request Body:');
-    console.log(req.body);
+    ///console.log('Request Body:');
+    //console.log(req.body);
     var model = req.body;
     var chartType = model.type;
     console.log("Chart Type:" + chartType);
@@ -413,7 +413,7 @@ function drawLineChart(input){
         chartData.push(retData);
 
     }
-   console.log(chartData);
+   //console.log(chartData);
 
     // var chartData = [
     //     {
@@ -443,7 +443,8 @@ function drawLineChart(input){
         .append("g")
         .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
-    console.log(svg);
+    console.log("svg.style('width'):");
+    console.log(svg.style("width"));
 
     //Define scales
     var roundBand = 0.5;
@@ -589,47 +590,61 @@ function drawLiquidGauge(input){
 
     //----------------------------------------------------------------
     //Sample data - Need to get these data for input orgData, scoreData, xData
-    //    var orgData = [
-    //        {"id": "1", "name": "Washington"},
-    //        {"id": "2", "name": "Vancouver"},
-    //        {"id": "3", "name": "Texas"}
-    //    ];
-    //    var xData = ["BM1", "BM2", "BM3","BM4", "BM5", "BM6"];
-    //    var scoreData =[
-    //        //x-value, y-value, orgIndex-->>color index
-    //        ["BM1", 20, 0],
-    //        ["BM2", 90, 0],
-    //        ["BM3", 50, 0],
-    //        ["BM4", 33, 0],
-    //        ["BM5", 95, 0],
-    //        ["BM6", 12, 0],
-    //        ["BM1", 20, 1],
-    //        ["BM2", 90, 1],
-    //        ["BM3", 50, 1],
-    //        ["BM4", 33, 1],
-    //        ["BM5", 95, 1],
-    //        ["BM6", 12, 1],
-    //        ["BM1", 20, 2],
-    //        ["BM2", 90, 2],
-    //        ["BM3", 50, 2],
-    //        ["BM4", 33, 2],
-    //        ["BM5", 95, 2],
-    //        ["BM6", 12, 2]
-    //    ];
+        var orgData = [
+            {"id": "1", "name": "Washington"},
+            {"id": "2", "name": "Vancouver"},
+            {"id": "3", "name": "Texas"}
+        ];
+        var xData = ["BM1", "BM2", "BM3","BM4", "BM5", "BM6"];
+    //x-value, y-value, orgIndex-->>color index
+        var scoreData =[
+            ["BM1", 20, 0],
+            ["BM2", 90, 0],
+            ["BM3", 50, 0],
+            ["BM4", 33, 0],
+            ["BM5", 95, 0],
+            ["BM6", 12, 0],
+            ["BM1", 20, 1],
+            ["BM2", 90, 1],
+            ["BM3", 50, 1],
+            ["BM4", 33, 1],
+            ["BM5", 95, 1],
+            ["BM6", 12, 1],
+            ["BM1", 20, 2],
+            ["BM2", 90, 2],
+            ["BM3", 50, 2],
+            ["BM4", 33, 2],
+            ["BM5", 95, 2],
+            ["BM6", 12, 2]
+        ];
     //----------------------------------------------------------------
     var margin = {top: 40, right: 40, bottom: 40, left: 50};
-    var width =  w - margin.left - margin.right;
-    var height = h - margin.top - margin.bottom;
+    var wWidth =  w - margin.left - margin.right;
+    var wHeight = h - margin.top - margin.bottom;
 
     //Add the wrapper svg
     var wsvg = window.d3.select(anchor)
         .append("svg")
-        .attr("width", width).attr("height", height);
+        .attr("id", "wsvg")
+        .attr("width", wWidth)
+        .attr("height", wHeight);
 
     var tickCount = xData.length;
     var orgCount = orgData.length;
-    var width= 100/tickCount + "%";
-    var height=100/orgCount + "%";
+    var width= 100/tickCount + "%";     //this is the percentage
+    var height=100/orgCount + "%";      //this is the percentage
+
+    var unitWidth = wWidth/tickCount;   //abs value
+    var unitHeight = wHeight/orgCount;
+    var radius =  Math.min(wWidth/tickCount, wHeight/orgCount)/2;
+    var locationX =  unitWidth/2 - radius;
+    var locationY =  unitHeight/2 - radius;
+
+    //var unitWidth = parseInt(width);
+    //var unitHeight = parseInt(height);
+    //var radius =  Math.min(unitWidth, unitHeight)/2;
+    //var locationX =  unitWidth/2 - radius;
+    //var locationY =  unitHeight/2 - radius;
 
     for(var i = 0; i< scoreData.length; i++){
         //Gauge data
@@ -639,13 +654,23 @@ function drawLiquidGauge(input){
         var orgIndex = scoreNode[2];
         var label = orgData[orgIndex].name;
 
+        var locale = {
+            radius:    radius,
+            locationX:  locationX,
+            locationY:  locationY
+        };
+
         // Adds the svg canvas
         wsvg.append("svg")
             .attr("width", width)
             .attr("id", scoreId)
+            .attr("x", radius + i*2*radius)
+            //.attr("y", i*2*radius)
             .attr("height", height);
-        var gaugeConfig = getGaugeConfig(orgIndex);
-        loadLiquidFillGauge(window, scoreId, scoreValue, label, gaugeConfig);
+
+
+        var gaugeConfig = getGaugeConfig(i);
+        loadLiquidFillGauge(window, locale, scoreId, scoreValue, label, gaugeConfig);
     }
 
     //Save SVG to PNG using GM
@@ -799,40 +824,71 @@ function getMaxScore(chartData){
 function getGaugeConfig(index){
     var config = liquidFillGaugeDefaultSettings();
     var scoreConfig = index % 5;
-    switch (index){
+    switch (scoreConfig){
         case 0:
+            config.circleThickness = 0.05;
             config.circleColor = "#FF7777";
-            config.textColor = "#FF4444";
+            config.textColor = "#555500";
+            config.textVertPosition = 0.8;
+            config.waveHeight = 0.05;
+            config.waveAnimate = true;
+            config.waveRise = false;
+            config.waveHeightScaling = false;
+            config.waveOffset = 0.25;
             config.waveTextColor = "#FFAAAA";
             config.waveColor = "#FFDDDD";
-            config.circleThickness = 0.2;
-            config.textVertPosition = 0.5;
-            config.waveAnimateTime = 1000;
-            config.showGaugeLabel = false;
-            break;
-        case 1:
-            config.circleColor = "#D4AB6A";
-            config.textColor = "#553300";
-            config.waveTextColor = "#805615";
-            config.waveColor = "#AA7D39";
-            config.circleThickness = 0.1;
-            config.circleFillGap = 0.2;
-            config.textVertPosition = 0.8;
-            config.waveAnimateTime = 2000;
-            config.waveHeight = 0.3;
-            config.waveCount = 1;
-            break;
-        case 2:
-            config.textVertPosition = 0.8;
-            config.waveAnimateTime = 5000;
-            config.waveHeight = 0.15;
-            config.waveAnimate = true;
-            config.waveOffset = 0.25;
-            config.valueCountUp = false;
+            config.textSize = 0.75;
+            config.waveCount = 3;
+            config.valueCountUp = 0;
+            config.showGaugeLabel = true;
             config.displayPercent = true;
             break;
+        case 1:
+            //config.circleColor = "#D4AB6A";
+            //config.textColor = "#553300";
+            //config.waveTextColor = "#805615";
+            //config.waveColor = "#AA7D39";
+            //config.circleThickness = 0.1;
+            //config.circleFillGap = 0.2;
+            //config.textVertPosition = 0.8;
+            //config.waveAnimateTime = 2000;
+            //config.waveHeight = 0.3;
+            //config.waveCount = 1;
+            //config.displayPercent = true;
+            //config.valueCountUp = 0;
+
+            config.circleThickness = 0.10;
+            config.circleColor = "#D4AB6A";
+            config.textColor = "#553300";
+            config.textVertPosition = 0.8;
+            config.waveHeight = 0.05;
+            config.waveAnimate = true;
+            config.waveRise = false;
+            config.waveHeightScaling = false;
+            config.waveOffset = 0.15;
+            config.waveTextColor = "#805615";
+            config.waveColor = "#AA7D39";
+            config.textSize = 0.75;
+            config.waveCount = 4;
+            config.valueCountUp = 0;
+            config.showGaugeLabel = true;
+            config.displayPercent = true;
+            break;
+        case 2:
+            config.circleThickness = 0.05;
+            config.textColor = "#555500";
+            config.textVertPosition = 0.8;
+            config.waveHeight = 0.05;
+            config.waveAnimate = true;
+            config.waveRise = false;
+            config.waveHeightScaling = false;
+            config.waveOffset = 0.25;
+            config.textSize = 0.75;
+            config.waveCount = 3;
+            config.valueCountUp = 0;
+            break;
         case 3:
-            config.circleThickness = 0.15;
+            config.circleThickness = 0.10;
             config.circleColor = "#808015";
             config.textColor = "#555500";
             config.waveTextColor = "#FFFFAA";
@@ -845,25 +901,27 @@ function getGaugeConfig(index){
             config.waveOffset = 0.25;
             config.textSize = 0.75;
             config.waveCount = 3;
+            config.valueCountUp = 0;
             break;
         case 4:
-            config.circleThickness = 0.4;
+            config.circleThickness = 0.05;
             config.circleColor = "#6DA398";
             config.textColor = "#0E5144";
             config.waveTextColor = "#6DA398";
             config.waveColor = "#246D5F";
             config.textVertPosition = 0.52;
             config.waveAnimateTime = 5000;
-            config.waveHeight = 0;
+            config.waveHeight = 0.05;
             config.waveAnimate = true;
-            config.waveCount = 2;
-            config.waveOffset = 0.25;
+            config.waveCount = 3;
+            config.waveOffset = 0.05;
+            config.waveRise = false;
             config.textSize = 1.2;
-            config.minValue = 30;
-            config.maxValue = 150;
-            config.displayPercent = false;
+            config.minValue = 0;
+            config.maxValue = 100;
+            config.displayPercent = true;
+            config.valueCountUp = 0;
             break;
-        case 5:
 
     }
     return config;
@@ -891,19 +949,25 @@ function liquidFillGaugeDefaultSettings(){
         displayPercent: true, // If true, a % symbol is displayed after the value.
         textColor: "#045681", // The color of the value text when the wave does not overlap it.
         waveTextColor: "#A4DBf8", // The color of the value text when the wave overlaps it.
-        showGaugeLabel: true
+        showGaugeLabel: false
     };
 }
 
-function loadLiquidFillGauge(window, elementId, value, gaugeLabel, config) {
+function loadLiquidFillGauge(window, locale, elementId, value, gaugeLabel, config) {
     if(config == null) config = liquidFillGaugeDefaultSettings();
 
     var gauge = window.d3.select("#" + elementId);
-    console.log(gauge);
-    var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height")))/2;
-    var locationX = parseInt(gauge.style("width"))/2 - radius;
-    var locationY = parseInt(gauge.style("height"))/2 - radius;
+    console.log(locale);
+    console.log(value);
+    var radius = locale.radius;
+    var locationX = locale.locationX;
+    var locationY = locale.locationY;
+    //var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height")))/2;
+    //var locationX = parseInt(gauge.style("width"))/2 - radius;
+    //var locationY = parseInt(gauge.style("height"))/2 - radius;
+
     var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
+
 
     var waveHeightScale;
     if(config.waveHeightScaling){
@@ -1078,7 +1142,7 @@ function loadLiquidFillGauge(window, elementId, value, gaugeLabel, config) {
             });
     }
 
-    function GaugeUpdater(){
+    function GaugeUpdater(window){
         this.update = function(value){
             var newFinalValue = parseFloat(value).toFixed(2);
             var textRounderUpdater = function(value){ return Math.round(value); };
@@ -1143,7 +1207,7 @@ function loadLiquidFillGauge(window, elementId, value, gaugeLabel, config) {
         }
     }
 
-    return new GaugeUpdater();
+    return new GaugeUpdater(window);
 }
 
 //---------------------------------------------------------------------------------------
