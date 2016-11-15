@@ -646,7 +646,6 @@ function drawLiquidGauge(input){
 
             //Reflect user configuration
             if(config.displayPercent !== null){
-                console.log(config.displayPercent);
                 gaugeConfig.displayPercent = config.displayPercent;
             }
             if(config.showGaugeLabel !== null){
