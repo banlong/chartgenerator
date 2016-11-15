@@ -1,0 +1,254 @@
+<svg width="910" height="600">
+    <svg width="910" height="500">
+        <line style="stroke: lightgrey;" x1="159" y1="403" x2="159" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="237" y1="126.5" x2="237" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="315" y1="284.5" x2="315" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="393" y1="351.65" x2="393" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="471" y1="106.75000000000003" x2="471" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="549" y1="434.6" x2="549" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="627" y1="308.20000000000005" x2="627" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="705" y1="217.35000000000002" x2="705" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="783" y1="399.05" x2="783" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="861" y1="134.39999999999998" x2="861" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="159" y1="383.25" x2="159" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="237" y1="166" x2="237" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="315" y1="205.50000000000003" x2="315" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="393" y1="272.65" x2="393" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="471" y1="225.25" x2="471" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="549" y1="426.7" x2="549" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="627" y1="229.2" x2="627" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="705" y1="138.35000000000002" x2="705" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="783" y1="245" x2="783" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="861" y1="87" x2="861" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="159" y1="343.75" x2="159" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="237" y1="245" x2="237" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="315" y1="177.85000000000002" x2="315" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="393" y1="154.15" x2="393" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="471" y1="383.25" x2="471" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="549" y1="229.2" x2="549" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="627" y1="387.2" x2="627" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="705" y1="217.35000000000002" x2="705" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="783" y1="166" x2="783" y2="470"></line>
+        <line style="stroke: lightgrey;" x1="861" y1="106.75000000000003" x2="861" y2="470"></line>
+        <circle cx="159" cy="388" r="13" fill="yellow" stroke="orange" stroke-width="3.25">
+            <title>Washington</title>
+        </circle>
+        <circle cx="237" cy="101" r="23.5" fill="yellow" stroke="orange" stroke-width="5.875">
+            <title>Washington</title>
+        </circle>
+        <circle cx="315" cy="265" r="17.5" fill="yellow" stroke="orange" stroke-width="4.375">
+            <title>Washington</title>
+        </circle>
+        <circle cx="393" cy="334.7" r="14.95" fill="yellow" stroke="orange" stroke-width="3.7375">
+            <title>Washington</title>
+        </circle>
+        <circle cx="471" cy="80.50000000000003" r="24.25" fill="yellow" stroke="orange" stroke-width="6.0625">
+            <title>Washington</title>
+        </circle>
+        <circle cx="549" cy="420.8" r="11.8" fill="yellow" stroke="orange" stroke-width="2.95">
+            <title>Washington</title>
+        </circle>
+        <circle cx="627" cy="289.6" r="16.6" fill="yellow" stroke="orange" stroke-width="4.15">
+            <title>Washington</title>
+        </circle>
+        <circle cx="705" cy="195.3" r="20.05" fill="yellow" stroke="orange" stroke-width="5.0125">
+            <title>Washington</title>
+        </circle>
+        <circle cx="783" cy="383.90000000000003" r="13.15" fill="yellow" stroke="orange" stroke-width="3.2875">
+            <title>Washington</title>
+        </circle>
+        <circle cx="861" cy="109.19999999999999" r="23.2" fill="yellow" stroke="orange" stroke-width="5.8">
+            <title>Washington</title>
+        </circle>
+        <circle cx="159" cy="367.5" r="13.75" fill="grey" stroke="blue" stroke-width="3.4375">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="237" cy="142" r="22" fill="grey" stroke="blue" stroke-width="5.5">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="315" cy="183.00000000000003" r="20.5" fill="grey" stroke="blue" stroke-width="5.125">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="393" cy="252.7" r="17.95" fill="grey" stroke="blue" stroke-width="4.4875">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="471" cy="203.5" r="19.75" fill="grey" stroke="blue" stroke-width="4.9375">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="549" cy="412.59999999999997" r="12.1" fill="grey" stroke="blue" stroke-width="3.025">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="627" cy="207.6" r="19.6" fill="grey" stroke="blue" stroke-width="4.9">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="705" cy="113.30000000000001" r="23.05" fill="grey" stroke="blue" stroke-width="5.7625">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="783" cy="224" r="19" fill="grey" stroke="blue" stroke-width="4.75">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="861" cy="60" r="25" fill="grey" stroke="blue" stroke-width="6.25">
+            <title>Vancouver</title>
+        </circle>
+        <circle cx="159" cy="326.5" r="15.25" fill="black" stroke="orange" stroke-width="3.8125">
+            <title>Texas</title>
+        </circle>
+        <circle cx="237" cy="224" r="19" fill="black" stroke="orange" stroke-width="4.75">
+            <title>Texas</title>
+        </circle>
+        <circle cx="315" cy="154.3" r="21.55" fill="black" stroke="orange" stroke-width="5.3875">
+            <title>Texas</title>
+        </circle>
+        <circle cx="393" cy="129.70000000000002" r="22.45" fill="black" stroke="orange" stroke-width="5.6125">
+            <title>Texas</title>
+        </circle>
+        <circle cx="471" cy="367.5" r="13.75" fill="black" stroke="orange" stroke-width="3.4375">
+            <title>Texas</title>
+        </circle>
+        <circle cx="549" cy="207.6" r="19.6" fill="black" stroke="orange" stroke-width="4.9">
+            <title>Texas</title>
+        </circle>
+        <circle cx="627" cy="371.59999999999997" r="13.6" fill="black" stroke="orange" stroke-width="3.4">
+            <title>Texas</title>
+        </circle>
+        <circle cx="705" cy="195.3" r="20.05" fill="black" stroke="orange" stroke-width="5.0125">
+            <title>Texas</title>
+        </circle>
+        <circle cx="783" cy="142" r="22" fill="black" stroke="orange" stroke-width="5.5">
+            <title>Texas</title>
+        </circle>
+        <circle cx="861" cy="80.50000000000003" r="24.25" fill="black" stroke="orange" stroke-width="6.0625">
+            <title>Texas</title>
+        </circle>
+        <text x="152" y="393" font-family="sans-serif" font-size="11px" fill="black">20</text>
+        <text x="230" y="106" font-family="sans-serif" font-size="11px" fill="black">90</text>
+        <text x="308" y="270" font-family="sans-serif" font-size="11px" fill="black">50</text>
+        <text x="386" y="339.7" font-family="sans-serif" font-size="11px" fill="black">33</text>
+        <text x="464" y="85.50000000000003" font-family="sans-serif" font-size="11px" fill="black">95</text>
+        <text x="542" y="425.8" font-family="sans-serif" font-size="11px" fill="black">12</text>
+        <text x="620" y="294.6" font-family="sans-serif" font-size="11px" fill="black">44</text>
+        <text x="698" y="200.3" font-family="sans-serif" font-size="11px" fill="black">67</text>
+        <text x="776" y="388.90000000000003" font-family="sans-serif" font-size="11px" fill="black">21</text>
+        <text x="854" y="114.19999999999999" font-family="sans-serif" font-size="11px" fill="black">88</text>
+        <text x="152" y="372.5" font-family="sans-serif" font-size="11px" fill="white">25</text>
+        <text x="230" y="147" font-family="sans-serif" font-size="11px" fill="white">80</text>
+        <text x="308" y="188.00000000000003" font-family="sans-serif" font-size="11px" fill="white">70</text>
+        <text x="386" y="257.7" font-family="sans-serif" font-size="11px" fill="white">53</text>
+        <text x="464" y="208.5" font-family="sans-serif" font-size="11px" fill="white">65</text>
+        <text x="542" y="417.59999999999997" font-family="sans-serif" font-size="11px" fill="white">14</text>
+        <text x="620" y="212.6" font-family="sans-serif" font-size="11px" fill="white">64</text>
+        <text x="698" y="118.30000000000001" font-family="sans-serif" font-size="11px" fill="white">87</text>
+        <text x="776" y="229" font-family="sans-serif" font-size="11px" fill="white">60</text>
+        <text x="854" y="65" font-family="sans-serif" font-size="11px" fill="white">100</text>
+        <text x="152" y="331.5" font-family="sans-serif" font-size="11px" fill="white">35</text>
+        <text x="230" y="229" font-family="sans-serif" font-size="11px" fill="white">60</text>
+        <text x="308" y="159.3" font-family="sans-serif" font-size="11px" fill="white">77</text>
+        <text x="386" y="134.70000000000002" font-family="sans-serif" font-size="11px" fill="white">83</text>
+        <text x="464" y="372.5" font-family="sans-serif" font-size="11px" fill="white">25</text>
+        <text x="542" y="212.6" font-family="sans-serif" font-size="11px" fill="white">64</text>
+        <text x="620" y="376.59999999999997" font-family="sans-serif" font-size="11px" fill="white">24</text>
+        <text x="698" y="200.3" font-family="sans-serif" font-size="11px" fill="white">67</text>
+        <text x="776" y="147" font-family="sans-serif" font-size="11px" fill="white">80</text>
+        <text x="854" y="85.50000000000003" font-family="sans-serif" font-size="11px" fill="white">95</text>
+        <g class="axis" transform="translate(30,470)">
+            <g class="tick" style="opacity: 1;" transform="translate(129,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM1</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(207,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM2</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(285,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM3</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(363,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM4</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(441,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM5</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(519,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM6</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(597,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM7</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(675,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM8</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(753,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM9</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(831,0)">
+                <line y2="6" x2="0"></line>
+                <text dy=".71em" style="text-anchor: middle;" y="9" x="0">BM10</text>
+            </g>
+            <path class="domain" d="M50,6V0H910V6"></path>
+        </g>
+        <g class="y axis" transform="translate(80,0)">
+            <g class="tick" style="opacity: 1;" transform="translate(0,470)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">0</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,429)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">10</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,388)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">20</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,347)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">30</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,306)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">40</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,265)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">50</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,224)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">60</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,183.00000000000003)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">70</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,142)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">80</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,101)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">90</text>
+            </g>
+            <g class="tick" style="opacity: 1;" transform="translate(0,60)">
+                <line x2="-6" y2="0"></line>
+                <text dy=".32em" style="text-anchor: end;" x="-9" y="0">100</text>
+            </g>
+            <path class="domain" d="M-6,60H0V470H-6"></path>
+            <text transform="rotate(-90)" y="10" dy="0.1em" x="-40" style="text-anchor: end;">Score</text>
+        </g>
+    </svg>
+    <svg width="910" height="100" y = "500">
+        <circle cx="85.5" cy="30" r="10" fill="yellow" stroke="orange" stroke-width="3"></circle>
+        <circle cx="185.5" cy="30" r="10" fill="grey" stroke="blue" stroke-width="3"></circle>
+        <circle cx="285.5" cy="30" r="10" fill="black" stroke="orange" stroke-width="3"></circle>
+        <text x="98.5" y="35" font-family="sans-serif" font-size="11px" fill="black">Washington</text>
+        <text x="198.5" y="35" font-family="sans-serif" font-size="11px" fill="black">Vancouver</text>
+        <text x="298.5" y="35" font-family="sans-serif" font-size="11px" fill="black">Texas</text>
+    </svg>
+</svg>
+
