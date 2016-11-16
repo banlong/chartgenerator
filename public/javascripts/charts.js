@@ -540,6 +540,7 @@ function drawLiquidGauge(input){
     var chartId = input.id;
     var dimension = config.dimension;
 
+    //input dimensions
     var h = dimension.h;
     var w = dimension.w;
 
@@ -601,6 +602,8 @@ function drawLiquidGauge(input){
     var wWidth =  w - margin.left - margin.right - xPadCount*xInnerPad;
     var wHeight = h - margin.top - margin.bottom - yPadCount*yInnerPad;
 
+
+
     //Add the wrapper svg,
     //Must use d3 from the window because it is the context. at least for the first time
     var wsvg = window.d3.select(anchor)
@@ -620,6 +623,7 @@ function drawLiquidGauge(input){
     var locationX =  unitWidth/2 - radius;
     var locationY =  unitHeight/2 - radius;
 
+    //Create gauges for each organization
     for(var orgIndex = 0; orgIndex< chartData.length; orgIndex++){
         //Gauge data
         var label = chartData[orgIndex].orgName;
@@ -696,8 +700,14 @@ function streamPNG(window, res, svgId, chartId){
     var buf = new Buffer('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' + svgData);
     res.set('Content-Type', 'image/png');
     res.set("Id", chartId);
+
+    //if we want to save image to file, uncomment line 706 & 711
+    //var pngFileStream = fs.createWriteStream("gauge.png");
     gm(buf, 'svg.svg').stream('png', function (err, stdout, stderr) {
         stdout.pipe(res);
+
+        //stdout can stream both pngFileStream and response
+        //stdout.pipe(pngFileStream);
     });
 }
 
