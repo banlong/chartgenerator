@@ -23,7 +23,6 @@ router.post('/:chartId', function(req, res, next) {
 
 module.exports = router;
 
-//Using jsdom.env
 function createChart(chartType, chartId, model, res){
     var data = model.data;
     var config = model.config;
