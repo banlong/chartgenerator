@@ -12,10 +12,12 @@ var router = express.Router();
 router.post('/:chartId', function(req, res, next) {
     //Get chart id
     var chartId = req.params.chartId;
-
     //Get input data:
     var model = req.body;
+
     var chartType = model.type;
+
+    console.log(model);
     createChart(chartType, chartId, model, res);
 });
 
@@ -25,6 +27,7 @@ module.exports = router;
 function createChart(chartType, chartId, model, res){
     var data = model.data;
     var config = model.config;
+    var xData = model.xData;
 
     jsdom.env(
         "<html><body><div></div>></body></html>",
@@ -35,6 +38,7 @@ function createChart(chartType, chartId, model, res){
                 anchor: "div",
                 window: window,
                 data: data,
+                xData: xData,
                 config: config,
                 response: res
             };

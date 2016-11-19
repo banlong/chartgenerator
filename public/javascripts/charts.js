@@ -15,14 +15,17 @@ function drawBubbleChart(input) {
     var res = input.response;
     var config = input.config;
     var chartId = input.id;
-    var dimension = config.dimension;
+    var xData = input.xData;
 
     var showLegend = config.showLegend;
     if (!showLegend){
         showLegend = false;
     }
-    var h = dimension.h;
-    var w = dimension.w;
+    //input dimensions
+     var h = config.height;
+     var w = config.width;
+
+
     var colors = [
         {fill: "yellow", stroke: "orange", text :"black"},
         {fill: "grey"  , stroke: "blue",   text :"white"},
@@ -36,55 +39,6 @@ function drawBubbleChart(input) {
         {fill: "teal"  , stroke: "black",   text :"white"}
     ];
     var legendWidth = w, legendHeight = 100;
-
-    //Prepare data for chart
-    var orgData = data.orgData;
-    var scoreData = data.scoreData;
-    var xData = data.xData;
-
-    //----------------------------------------------------------------
-    //Sample data - Need to get these data for input orgData, scoreData, xData
-    //get it out of data
-    // var orgData = [
-    //     {"id": "1", "name": "Washington"},
-    //     {"id": "2", "name": "Vancouver"},
-    //     {"id": "3", "name": "Texas"}
-    // ];
-    //var scoreData =[
-    //    //x-value, y-value, orgIndex-->>color index
-    //    ["BM1", 20, 0],
-    //    ["BM2", 90, 0],
-    //    ["BM3", 50, 0],
-    //    ["BM4", 33, 0],
-    //    ["BM5", 95, 0],
-    //    ["BM6", 12, 0],
-    //    ["BM7", 44, 0],
-    //    ["BM8", 67, 0],
-    //    ["BM9", 21, 0],
-    //    ["BM10", 88, 0],
-    //    ["BM1", 25, 1],
-    //    ["BM2", 80, 1],
-    //    ["BM3", 70, 1],
-    //    ["BM4", 53, 1],
-    //    ["BM5", 65, 1],
-    //    ["BM6", 14, 1],
-    //    ["BM7", 64, 1],
-    //    ["BM8", 87, 1],
-    //    ["BM9", 60, 1],
-    //    ["BM10", 100, 1],
-    //    ["BM1", 35, 2],
-    //    ["BM2", 60, 2],
-    //    ["BM3", 77, 2],
-    //    ["BM4", 83, 2],
-    //    ["BM5", 25, 2],
-    //    ["BM6", 64, 2],
-    //    ["BM7", 24, 2],
-    //    ["BM8", 67, 2],
-    //    ["BM9", 80, 2],
-    //    ["BM10", 95, 2]
-    //];
-    //var xData = ["BM1", "BM2", "BM3","BM4", "BM5", "BM6","BM7", "BM8", "BM9", "BM10"];
-    //----------------------------------------------------------------
 
     //Chart dimension
     var margin = {top: 0, right: 40, bottom: 0, left: 50};
@@ -113,12 +67,13 @@ function drawBubbleChart(input) {
         .domain(xData)
         .rangeRoundBands([margin.left, width], innerPad, outerPad);
 
+    var maxScore = getMaxScore(data);
     var yScale = window.d3.scale.linear()
-        .domain([0, window.d3.max(scoreData, function(d) { return d[1]; })])
+        .domain([0, maxScore])
         .range([height - topPad, 2*topPad]);
 
     var rScale = window.d3.scale.linear()
-        .domain([0, d3.max(scoreData, function(d) { return d[1]; })])
+        .domain([0, maxScore])
         .range([10, 25]); //radius values will always fall within this range
 
 
@@ -139,86 +94,87 @@ function drawBubbleChart(input) {
 
 
     //Add vertical lines
-    var tickDistance =  scoreData.length > 1 ? xScale(scoreData[1][0])-xScale(scoreData[0][0]) : 0;
+    var tickDistance =  data.length > 1 ? xScale(data[0].data[1].name)-xScale(data[0].data[0].name) : 0;
     var leftPadInPixel = tickDistance/2 + topPad;
 
-    //Add vertical lines
-    svg.selectAll("line")
-        .data(scoreData)
-        .enter()
-        .append("line")          // attach a line
-        .style("stroke", "lightgrey")  // colour the line
-        .attr("x1", function(d) {
-            return leftPadInPixel  +  xScale(d[0])})     // x position of the first end of the line
-        .attr("y1", function(d) {
-            return  yScale(d[1]) + rScale(d[1]) + 2 })      // y position of the first end of the line
-        .attr("x2", function(d) {
-            return leftPadInPixel  +  xScale(d[0])})     // x position of the second end of the line
-        .attr("y2", height - topPad);
+    for (var orgIndex = 0; orgIndex < data.length ; orgIndex++){
+        //Add vertical lines
+        svg.selectAll("line")
+            .data(data[orgIndex].data)
+            .enter()
+            .append("line")          // attach a line
+            .style("stroke", "lightgrey")  // colour the line
+            .attr("x1", function(node) {
+                return leftPadInPixel  +  xScale(node.name)})     // x position of the first end of the line
+            .attr("y1", function(node) {
+                return  yScale(node.score) + rScale(node.score) + 2 })      // y position of the first end of the line
+            .attr("x2", function(node) {
+                return leftPadInPixel  +  xScale(node.name)})     // x position of the second end of the line
+            .attr("y2", height - topPad);
+
+    }
 
 
-    //Add bubbles, bubble is above the vertical lines
-    svg.selectAll("circle")
-        .data(scoreData)
-        .enter()
-        .append("circle")
-        .attr("cx", function (d) {
-            return (leftPadInPixel  +  xScale(d[0]));
-        })
-        .attr("cy", function (d) {
-            return yScale(d[1]);
-        })
-        .attr("r", function (d) {
-            return rScale(d[1]);
-        })
-        //fill color
-        .attr("fill", function (d, i) {
-            var index = d[2]%colors.length;
-            return colors[index].fill
-        })
-        //color of boundary
-        .attr("stroke", function (d, i) {
-            var index = d[2]% colors.length;
-            return colors[index].stroke
-        })
-        //width of the boundary
-        .attr("stroke-width", function (d) {
-            return rScale(d[1]) / 4;
-        })
-        //add tip to the bubble (show the org name)
-        .append("svg:title")
-        .text(function(d) {
-            var orgIndex = d[2];
-            if(orgData[orgIndex]){
-                var orgName = orgData[orgIndex].name;
-                return orgName;
-            }else{
-                return "N/A";
-            }
+    for (var orgIndex = 0; orgIndex < data.length ; orgIndex++){
+        //Add bubbles, bubble is above the vertical lines
+        svg.selectAll("circle")
+            .data(data[orgIndex].data)
+            .enter()
+            .append("circle")
+            .attr("cx", function (node) {
+                return (leftPadInPixel  +  xScale(node.name));
+            })
+            .attr("cy", function (node) {
+                return yScale(node.score);
+            })
+            .attr("r", function (node) {
+                return rScale(node.score);
+            })
+            //fill color
+            .attr("fill", function (node, i) {
+                var index = orgIndex % colors.length;
+                return colors[index].fill
+            })
+            //color of boundary
+            .attr("stroke", function (node, i) {
+                var index = orgIndex % colors.length;
+                return colors[index].stroke
+            })
+            //width of the boundary
+            .attr("stroke-width", function (node) {
+                return rScale(node.score) / 4;
+            })
+            //add tip to the bubble (show the org name)
+            .append("svg:title")
+            .text(function(node) {
+                return data[orgIndex].name;
+            });
+    }
 
-        });
+    for (var orgIndex = 0; orgIndex < data.length ; orgIndex++){
+        //Add score texts
+        var defaultTextLength = 20;
+        svg.selectAll("text")
+            .data(data[orgIndex].data)
+            .enter()
+            .append("text")
+            .text(function (node) {
+                return node.score;
+            })
+            .attr("x", function (node) {
+                return leftPadInPixel - defaultTextLength/2  + 3 + xScale(node.name) ;
+            })
+            .attr("y", function (node) {
+                return yScale(node.score) + 5;
+            })
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "11px")
+            .attr("fill", function (d, i) {
+                var index = orgIndex % colors.length;
+                return colors[index].text
+            });
 
-    //Add texts
-    var defaultTextLength = 20;
-    svg.selectAll("text")
-        .data(scoreData)
-        .enter()
-        .append("text")
-        .text(function (d) {
-            return d[1];
-        })
-        .attr("x", function (d) {
-            return leftPadInPixel - defaultTextLength/2  + 3 + xScale(d[0]) ;
-        })
-        .attr("y", function (d) {
-            return yScale(d[1]) + 5;
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "11px")
-        .attr("fill", function (d, i) {
-            var index = d[2]% colors.length;
-            return colors[index].text
-        });
+    }
 
     //Adding X-Axis
     svg.append("g")
@@ -258,14 +214,14 @@ function drawBubbleChart(input) {
 
 
         var circles = legend.selectAll("circle")
-            .data(orgData)
+            .data(data)
             .enter()
             .append("circle");
 
         //set attr for circles, center x
         circles.attr("cx", function(d, i) {
             //x-position of the circle center
-            return xScale(scoreData[0][0])*(1- 0.1*outerPad) + i*groupWidth;
+            return xScale(xData[0])*(1- 0.1*outerPad) + i*groupWidth;
         })
             //center y-position of the center
             .attr("cy", yTop)
@@ -275,13 +231,13 @@ function drawBubbleChart(input) {
             })
             //fill color
             .attr("fill", function(d, i){
-                var colorIndex = i%colors.length;
+                var colorIndex = orgIndex % colors.length;
                 var color = colors[colorIndex];
                 return color.fill
             })
             //color of boundary
             .attr("stroke", function(d, i){
-                var colorIndex = i%colors.length;
+                var colorIndex =  orgIndex % colors.length;
                 var color = colors[colorIndex];
                 return color.stroke
             })
@@ -292,14 +248,14 @@ function drawBubbleChart(input) {
 
         //Add texts
         legend.selectAll("text")
-            .data(orgData)
+            .data(data)
             .enter()
             .append("text")
-            .text(function (d) {
-                return d.name;
+            .text(function (org) {
+                return org.name;
             })
-            .attr("x", function (d, i) {
-                return xScale(scoreData[0][0])*(1-0.1*outerPad) + circleRadius + 3 + i*groupWidth;
+            .attr("x", function (org, i) {
+                return xScale(xData[0])*(1-0.1*outerPad) + circleRadius + 3 + i*groupWidth;
             })
             .attr("y", function (d) {
                 return yTop + 5;
@@ -334,9 +290,9 @@ function drawLineChart(input){
     var res = input.response;
     var config = input.config;
     var chartId = input.id;
-    var dimension = config.dimension;
-    var h = dimension.h;
-    var w = dimension.w;
+    var xData = input.xData;
+    var h = config.height;
+    var w = config.width;
 
     var showLineLabel = config.showLineLabel;
     if (!showLineLabel){
@@ -349,48 +305,7 @@ function drawLineChart(input){
     var height = h - margin.top - margin.bottom;   //430
     var colors = ['#99CC00','#FFCC00','#FF9900','#FF6600','#666699','#969696','#003366','#339966','#003300','#333300','#993300','#333399','#7EBC89'];
 
-    //Prepare data
-    var orgData = data.orgData;
-    var scoreData = data.scoreData;
-    var xData = data.xData;
-    //process input data
-    var chartData = [];
-    for(var i = 0 ; i < orgData.length ; i++) {
-        var retData = {
-            orgName: orgData[i].name,
-            scoreData: []
-        };
-        for(var j = 0 ; j < scoreData.length ; j++) {
-            var score = scoreData[j];
-            if(score[2] != i) continue;
-            retData.scoreData.push({
-                name: score[0],
-                score: score[1]
-            });
-        }
-        chartData.push(retData);
-
-    }
-    //console.log(chartData);
-
-    // var chartData = [
-    //     {
-    //         orgName: "Washington Mutual Fund",
-    //         scoreData: [
-    //             {name: "BM1", score: 58.13},
-    //             {name: "BM2", score: 53.98},
-    //             {name: "BM3", score: 67.00},
-    //             {name: "BM4", score: 89.70},
-    //             {name: "BM5", score: 99.00},
-    //             {name: "BM6", score: 130.28},
-    //             {name: "BM7", score: 166.70},
-    //             {name: "BM8", score: 234.98},
-    //             {name: "BM9", score: 345.44},
-    //             {name: "BM10", score: 443.34}
-    //         ]
-    //     },
-
-    var maxScore = getMaxScore(chartData);
+    var maxScore = getMaxScore(data);
     var padding = 20;
 
     //Add the svg,
@@ -436,10 +351,10 @@ function drawLineChart(input){
         .y(function(d) { return yScale(d.score); });
 
     //Draw lines
-    for(var i = 0; i<chartData.length; i++){
+    for(var i = 0; i<data.length; i++){
         var orgColorIndex = i % colors.length;
-        var orgName = chartData[i].orgName;
-        var lineData = chartData[i].scoreData;
+        var orgName = data[i].name;
+        var lineData = data[i].data;
         // Add the value line path.
         svg.append("path")
             .attr("class", "line")
@@ -534,75 +449,22 @@ function drawLineChart(input){
 function drawLiquidGauge(input){
     var anchor = input.anchor;
     var window = input.window;
-    var data = input.data;
+    var data = input.data; //[]org with score
     var res = input.response;
     var config = input.config;
     var chartId = input.id;
-    var dimension = config.dimension;
+     var xData = input.xData;
 
     //input dimensions
-    var h = dimension.h;
-    var w = dimension.w;
+    var h = config.height;
+    var w = config.width;
 
-    //Prepare data
-    var orgData = data.orgData;
-    var scoreData = data.scoreData;
-    var xData = data.xData;
-    var chartData = [];
-    for(var i = 0 ; i < orgData.length ; i++) {
-        var retData = {
-            orgName: orgData[i].name,
-            scoreData: []
-        };
-        for(var j = 0 ; j < scoreData.length ; j++) {
-            var score = scoreData[j];
-            if(score[2] != i) continue;
-            retData.scoreData.push({
-                name: score[0],
-                score: score[1]
-            });
-        }
-        chartData.push(retData);
-    }
-
-    //----------------------------------------------------------------
-    //Sample data - Need to get these data for input orgData, scoreData, xData
-    //    var orgData = [
-    //        {"id": "1", "name": "Washington"},
-    //        {"id": "2", "name": "Vancouver"},
-    //        {"id": "3", "name": "Texas"}
-    //    ];
-    //    var xData = ["BM1", "BM2", "BM3","BM4", "BM5", "BM6"];
-    //x-value, y-value, orgIndex-->>color index
-    //    var scoreData =[
-    //        ["BM1", 20, 0],
-    //        ["BM2", 90, 0],
-    //        ["BM3", 50, 0],
-    //        ["BM4", 33, 0],
-    //        ["BM5", 95, 0],
-    //        ["BM6", 12, 0],
-    //        ["BM1", 20, 1],
-    //        ["BM2", 90, 1],
-    //        ["BM3", 50, 1],
-    //        ["BM4", 33, 1],
-    //        ["BM5", 95, 1],
-    //        ["BM6", 12, 1],
-    //        ["BM1", 20, 2],
-    //        ["BM2", 90, 2],
-    //        ["BM3", 50, 2],
-    //        ["BM4", 33, 2],
-    //        ["BM5", 95, 2],
-    //        ["BM6", 12, 2]
-    //    ];
-    //----------------------------------------------------------------
     var xInnerPad = 10, yInnerPad = 10;
     var xPadCount = xData.length-1;
-    var yPadCount = orgData.length-1;
+    var yPadCount = data.length-1;
     var margin = {top: 10, right: 10, bottom: 10, left: 10};
     var wWidth =  w - margin.left - margin.right - xPadCount*xInnerPad;
     var wHeight = h - margin.top - margin.bottom - yPadCount*yInnerPad;
-
-
 
     //Add the wrapper svg,
     //Must use d3 from the window because it is the context. at least for the first time
@@ -613,7 +475,7 @@ function drawLiquidGauge(input){
         .attr("height", wHeight);
 
     var tickCount = xData.length;
-    var orgCount = orgData.length;
+    var orgCount = data.length;
     var width= 100/tickCount + "%";     //this is the percentage
     var height=100/orgCount + "%";      //this is the percentage
 
@@ -624,10 +486,10 @@ function drawLiquidGauge(input){
     var locationY =  unitHeight/2 - radius;
 
     //Create gauges for each organization
-    for(var orgIndex = 0; orgIndex< chartData.length; orgIndex++){
+    for(var orgIndex = 0; orgIndex< data.length; orgIndex++){
         //Gauge data
-        var label = chartData[orgIndex].orgName;
-        var scores = chartData[orgIndex].scoreData;
+        var label = data[orgIndex].name;
+        var scores = data[orgIndex].data;
         for(var scoreIndex = 0; scoreIndex < scores.length; scoreIndex++ ){
             var scoreNode = scores[scoreIndex];
             var scoreId = label + scoreNode.name;
@@ -715,7 +577,7 @@ function streamPNG(window, res, svgId, chartId){
 function getMaxScore(chartData){
     var max = 0;
     for(var i = 0; i<chartData.length; i++){
-        var orgScoreData = chartData[i].scoreData;
+        var orgScoreData = chartData[i].data;
         var orgMax = d3.max(orgScoreData, function(d) { return d.score; });
         max = d3.max([max, orgMax]);
     }
