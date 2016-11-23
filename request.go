@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"encoding/json"
-	"mediacluster/tools"
+	"chartgenerator/tools"
 )
 
 var(
